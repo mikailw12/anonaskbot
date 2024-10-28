@@ -4,8 +4,8 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
-import handlers, keyboards
-    
+import handlers
+
 
 async def main():
     bot = Bot(token='7533292756:AAEO4pJJTqHkftyHrIUCzm5GTeife79a5kI')
