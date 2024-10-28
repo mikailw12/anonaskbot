@@ -1,14 +1,15 @@
 from aiogram import Router, F
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 import keyboards
+import aiogram.types
 
 handler = Router()
 
 # Укажите свой Telegram ID
-ADMIN_ID = 1166639026  # Замените на ваш реальный ID
+ADMIN_ID = '-1002224413709'  # Замените на ваш реальный ID
 
 class MessageText(StatesGroup):
     text = State()
@@ -71,7 +72,7 @@ async def yes_text(message: Message, state: FSMContext):
             await message.bot.send_message(
                 chat_id=ADMIN_ID,
                 text=admin_text
-            )
+                )
         except Exception as e:
             print(f"Ошибка при отправке сообщения админу: {e}")
 
@@ -89,3 +90,4 @@ async def cancel(callback: CallbackQuery, state: FSMContext):
 
     await state.clear()
     await callback.message.answer("Отправка сообщения была отменена")
+
