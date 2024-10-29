@@ -1,5 +1,3 @@
-import aiogram
-import sqlalchemy
 import asyncio 
 
 from aiogram import Bot, Dispatcher
