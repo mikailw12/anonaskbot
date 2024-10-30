@@ -22,8 +22,7 @@ messages = {}
 
 @handler.message(CommandStart())
 async def start(message: Message, command: CommandStart, state: FSMContext):
-    await add_user(message.from_user.id)
-    
+
     global bot_message_id
     referrer_id = command.args  # Получаем ID владельца из диплинка
 
@@ -33,6 +32,7 @@ async def start(message: Message, command: CommandStart, state: FSMContext):
             f'🚀Начни получать анонимные сообщения прямо сейчас!\n\nТвоя ссылка:\n👉 t.me/anonimniyaskbot?start={message.from_user.id}\n\nРазмести эту ссылку ☝️ в описании профиля Telegram/TikTok/Instagram, чтобы начать получать анонимные сообщения 💬'
         )
     else:
+        await add_user(message.from_user.id, message.from_user.username)
         # Сохраняем ID владельца в состоянии
         await state.update_data(referrer_id=referrer_id)
         await state.set_state(MessageText.text)

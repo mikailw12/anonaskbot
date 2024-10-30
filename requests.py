@@ -45,13 +45,47 @@ class Answer(Base):
 
 Sessionlocal = sessionmaker(autoflush=False, bind=engine)
 
-async def add_user(tg_id):
+async def add_user(tg_id, username=None):
     db = Sessionlocal()
-
-    user = db.query(User).filter(User.tg_id==tg_id).first()
-
-    if not user:
-        new_user = User(tg_id = tg_id)
-        db.add(new_user)
-        db.commit()
+    try:
+        user = db.query(User).filter(User.tg_id == tg_id).first()
+        if not user:
+            new_user = User(tg_id=tg_id, username=username)
+            db.add(new_user)
+            db.commit()
+            return new_user
+        return user
+    finally:
         db.close()
+
+async def new_question(tg_id, question_text):
+    db = Sessionlocal()
+    try:
+        user = db.query(User).filter(User.tg_id == tg_id).first()
+        if user:
+            question = Question(user_id=user.id, question_text=question_text)
+            db.add(question)
+            db.commit()
+            return question
+        else:
+            raise ValueError("Пользователь не найден.")
+    finally:
+        db.close()
+
+async def add_answer(tg_id, question_id, answer_text):
+    db = Sessionlocal()
+    try:
+        user = db.query(User).filter(User.tg_id == tg_id).first()
+        question = db.query(Question).filter(Question.id == question_id).first()
+        
+        if user and question:
+            answer = Answer(question_id=question.id, user_id=user.id, answer_text=answer_text)
+            db.add(answer)
+            db.commit()
+            return answer
+        else:
+            raise ValueError("Пользователь или вопрос не найден.")
+    finally:
+        db.close()
+
+
