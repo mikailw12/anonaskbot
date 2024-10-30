@@ -89,7 +89,7 @@ async def handle_reply(message: Message):
                 chat_id=sender_id,
                 text=f"Ответ на ваше анонимное сообщение:\n\n{message.text}"
             )
-            await message.answer("Ваш ответ был отправлен .")
+            await message.answer("Ваш ответ был отправлен.")
         except Exception as e:
             await message.answer("Не удалось отправить ответ.")
             print(f"Ошибка при отправке ответа: {e}")
