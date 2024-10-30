@@ -4,6 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 import keyboards
+from requests import add_user
 
 handler = Router()
 
@@ -21,6 +22,8 @@ messages = {}
 
 @handler.message(CommandStart())
 async def start(message: Message, command: CommandStart, state: FSMContext):
+    await add_user(message.from_user.id)
+    
     global bot_message_id
     referrer_id = command.args  # Получаем ID владельца из диплинка
 
