@@ -3,11 +3,9 @@ import asyncio
 from aiogram import Bot, Dispatcher
 
 import handlers
-from requests import Base, engine
 
 
 async def main():
-    Base.metadata.create_all(bind=engine)
     bot = Bot(token='7533292756:AAEO4pJJTqHkftyHrIUCzm5GTeife79a5kI')
     dp = Dispatcher()
     dp.include_router(handlers.handler)

@@ -4,7 +4,6 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 import keyboards
-from requests import add_user
 
 handler = Router()
 
@@ -32,7 +31,6 @@ async def start(message: Message, command: CommandStart, state: FSMContext):
             f'🚀Начни получать анонимные сообщения прямо сейчас!\n\nТвоя ссылка:\n👉 t.me/anonimniyaskbot?start={message.from_user.id}\n\nРазмести эту ссылку ☝️ в описании профиля Telegram/TikTok/Instagram, чтобы начать получать анонимные сообщения 💬'
         )
     else:
-        await add_user(message.from_user.id, message.from_user.username)
         # Сохраняем ID владельца в состоянии
         await state.update_data(referrer_id=referrer_id)
         await state.set_state(MessageText.text)
