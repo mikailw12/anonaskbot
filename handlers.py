@@ -42,10 +42,10 @@ async def yes_text(message: Message, state: FSMContext):
     # Проверка наличия фотографии в сообщении
     if message.photo:
         photo = message.photo[-1].file_id  # Берём фотографию самого большого размера
-        caption = message.caption or "Анонимное сообщение"  # Подпись (если есть)
+        caption = message.caption or ""  # Подпись (если есть)
     else:
         photo = None
-        caption = message.text or "Анонимное сообщение"
+        caption = message.text or ""
 
     # Отправка сообщения владельцу
     if referrer_id:
