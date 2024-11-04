@@ -2,14 +2,14 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
-import handlers
+from handlers import router
+from config import TOKEN
 
 
 async def main():
-    bot = Bot(token='7533292756:AAEO4pJJTqHkftyHrIUCzm5GTeife79a5kI')
+    bot = Bot(token=TOKEN)
     dp = Dispatcher()
-    dp.include_router(handlers.handler)
-  # Создаем таблицы при запуске бота
+    dp.include_router(router)
     await dp.start_polling(bot)
 
 

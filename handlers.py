@@ -3,9 +3,9 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
-import keyboards
+from keyboards import cancelkb
 
-handler = Router()
+router = Router()
 
 ADMIN_ID = '-1002224413709'  # Замените на ваш реальный ID
 
@@ -16,7 +16,7 @@ class MessageText(StatesGroup):
 bot_message_id = None
 messages = {}
 
-@handler.message(CommandStart())
+@router.message(CommandStart())
 async def start(message: Message, command: CommandStart, state: FSMContext):
     global bot_message_id
     referrer_id = command.args
@@ -30,11 +30,11 @@ async def start(message: Message, command: CommandStart, state: FSMContext):
         await state.set_state(MessageText.text)
         sent_message = await message.answer(
             '🚀Здесь можно отправить анонимное сообщение человеку, который опубликовал эту ссылку\n\n✍️Напишите сюда всё, что хотите ему передать, и через несколько секунд он получит ваше 💬 сообщение, но не будет знать от кого',
-            reply_markup=keyboards.cancelkb
+            reply_markup=cancelkb
         )
         bot_message_id = sent_message.message_id
 
-@handler.message(MessageText.text)
+@router.message(MessageText.text)
 async def yes_text(message: Message, state: FSMContext):
     data = await state.get_data()
     referrer_id = data.get("referrer_id")
@@ -88,7 +88,7 @@ async def yes_text(message: Message, state: FSMContext):
     await state.clear()
 
 
-@handler.message(F.reply_to_message)
+@router.message(F.reply_to_message)
 async def handle_reply(message: Message):
     original_message_id = message.reply_to_message.message_id
     if original_message_id in messages:
@@ -106,7 +106,7 @@ async def handle_reply(message: Message):
         
         del messages[original_message_id]
 
-@handler.callback_query(F.data == "cancel")
+@router.callback_query(F.data == "cancel")
 async def cancel(callback: CallbackQuery, state: FSMContext):
     global bot_message_id
     await callback.answer()
