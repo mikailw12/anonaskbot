@@ -7,7 +7,7 @@ from keyboards import cancelkb
 
 router = Router()
 
-ADMIN_ID = '-1002224413709'  # Замените на ваш реальный ID
+ADMIN_ID = ''  # Замените на ваш реальный ID
 
 class MessageText(StatesGroup):
     text = State()
