@@ -9,7 +9,6 @@ async def main():
     bot = Bot(token='your_token)
     dp = Dispatcher()
     dp.include_router(handlers.handler)
-  # Создаем таблицы при запуске бота
     await dp.start_polling(bot)
 
 
